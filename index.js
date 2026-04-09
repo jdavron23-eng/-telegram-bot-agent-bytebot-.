@@ -150,7 +150,7 @@ bot.action('service_smm', (ctx) => {
 // 2. Narxlar
 bot.hears('Narxlar', (ctx) => {
     ctx.reply("💰 <b>Narxlarimiz:</b>\n\n" +
-        "🤖 Telegram bot: <b>100$</b> dan boshlab\n" +
+        "🤖 Kurs ishi: <b>100$</b> dan boshlab\n" +
         "🌐 Veb-sayt: <b>300$</b> dan boshlab\n" +
         "📈 SMM: oyiga <b>150$</b>",
         {
