@@ -551,7 +551,7 @@ TALABLAR:
                     if (isIndependent) {
                         // Plan-based Expert Stages for Mustaqil ish
                         const expertInstr = "Siz ushbu soha ekspertisiz. Har bir gapni o'ta chuqur tahlil, statistikalar va ilmiy misollar bilan boyitib yozing. Matn hajmi (betlar soni) mijoz uchun hayotiy muhim, shuning uchun hechni qisqartirmang!";
-                        if (i === 1) stagePrompt = `${prompt}\n\nVazifa: ${expertInstr}\nREJA va KIRISH qismini yozing. Mavzu nomini qayta yozmang!`;
+                        if (i === 1) stagePrompt = `${prompt}\n\nVazifa: ${expertInstr}\nREJA va KIRISH qismini yozing. REJA qismida 'REJA' so'zini yozib, tagidan bandlarini yozing. Mavzu nomini qayta yozmang!`;
                         else if (i === 2) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\nMustaqil ishning 1-BOB qismini o'ta batafsil va ilmiy tarzda yozing.`;
                         else if (i === 3) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n2-BOB qismini o'ta batafsil va misollar bilan yozing.`;
                         else if (i === 4) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n3-BOB qismini o'ta batafsil va ilmiy xulosalar bilan yozing.`;
@@ -710,9 +710,9 @@ TALABLAR:
             // Re-add centered title on 2nd page (Mustaqil ish)
             if (paragraphs.length === 16 && isIndependent) {
                 paragraphs.push(new Paragraph({
-                    children: [new TextRun({ text: (order.topic || '').toUpperCase(), bold: true, size: 30 })],
+                    children: [new TextRun({ text: (order.topic || '').toUpperCase(), bold: true, size: 36 })],
                     alignment: AlignmentType.CENTER,
-                    spacing: { after: 400 }
+                    spacing: { before: 200, after: 600 }
                 }));
             }
 
