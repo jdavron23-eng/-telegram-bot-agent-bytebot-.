@@ -364,9 +364,14 @@ async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisi
                     max_tokens: 8000
                 })
             });
-            const data = await resp.json();
-            if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
-        } catch (e) { console.log("Groq Error:", e.message); }
+            if (resp.ok) {
+                const data = await resp.json();
+                if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
+            } else {
+                const err = await resp.text();
+                console.log(`Groq HTTP Error ${resp.status}: ${err}`);
+            }
+        } catch (e) { console.log("Groq fetch Error:", e.message); }
     }
 
     // 2. Anthropic Claude
@@ -394,7 +399,7 @@ async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisi
         } catch (e) { console.log("Gemini Error:", e.message); }
     }
 
-    // 4. OpenRouter (Multi-AI Fallback including DeepSeek)
+    // 4. OpenRouter (Multi-AI Fallback)
     if (process.env.OPENROUTER_API_KEY) {
         try {
             const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -402,17 +407,22 @@ async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisi
                 headers: { 
                     'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
                     'Content-Type': 'application/json',
-                    'HTTP-Referer': 'https://github.com/jdavron23-eng/-telegram-bot-agent-bytebot-',
-                    'X-Title': 'ByteBot Academic'
+                    'HTTP-Referer': 'https://bytebot.ai',
+                    'X-Title': 'ByteBot'
                 },
                 body: JSON.stringify({
                     model: "deepseek/deepseek-chat",
                     messages: [{ role: "system", content: systemPrompt }, { role: "user", content: prompt }]
                 })
             });
-            const data = await resp.json();
-            if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
-        } catch (e) { console.log("OpenRouter Error:", e.message); }
+            if (resp.ok) {
+                const data = await resp.json();
+                if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
+            } else {
+                const err = await resp.text();
+                console.log(`OpenRouter HTTP Error ${resp.status}: ${err}`);
+            }
+        } catch (e) { console.log("OpenRouter fetch Error:", e.message); }
     }
 
     throw new Error("Barcha AI tizimlari band.");
