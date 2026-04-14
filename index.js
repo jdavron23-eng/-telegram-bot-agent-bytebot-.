@@ -460,7 +460,7 @@ async function processAIGeneration(userId, order, existingMsgId = null) {
         }
         const targetWords = order.service === 'Maqola yozib berish' && order.style === 'Ilmiy (Scientific)' 
             ? pCount * 450 
-            : pCount * 400;
+            : pCount * 500; // Increased volume for popular/independent work
 
         let prompt = "";
         if (order.service === 'Maqola yozib berish') {
@@ -497,7 +497,7 @@ MAQOLA STRUKTURASI:
 2. MAVZU HAQIDA CHUQUR MULOHAZA VA TAHLILIY MATN. (Hech qanday bo'limlarga, kichik sarlavhalarga bo'lmang! Matn bitta yaxlit, chuqur tahliliy oqimda bo'lishi shart).
 
 TALABLAR:
-- Jami hajm kamida ${targetWords} so'z bo'lishi shart.
+- Jami hajm kamida ${targetWords} so'z bo'lishi shart. Bu juda muhim! Matnni o'ta batafsil va chuqur yozing.
 - Matn tushunarli, qiziqarli, ILMIY-OMMABOP va ravon bo'lishi shart.`;
             }
         } else {
@@ -599,33 +599,18 @@ TALABLAR:
                     }));
                 }
             } else {
-                // Maqola uchun sodda va professional muqova
+                // Ommabop maqola uchun ixcham header (Muallif chapda, Sarlavha o'rtada katti qora)
                 paragraphs = [
                     new Paragraph({
-                        children: [new TextRun({ text: order.topic.toUpperCase(), bold: true, size: 48 })],
-                        alignment: AlignmentType.CENTER,
-                        spacing: { before: 2000, after: 800 }
+                        children: [new TextRun({ text: order.authorName || 'Muallif', bold: true, size: 22 })],
+                        alignment: AlignmentType.LEFT,
+                        spacing: { before: 200, after: 400 }
                     }),
                     new Paragraph({
-                        children: [new TextRun({ text: "MAQOLA", bold: true, size: 36 })],
+                        children: [new TextRun({ text: order.topic.toUpperCase(), bold: true, size: 44 })],
                         alignment: AlignmentType.CENTER,
-                        spacing: { after: 1200 }
-                    }),
-                    new Paragraph({
-                        children: [new TextRun({ text: `Uslub: ${order.style || 'Ommabop'}`, size: 28 })],
-                        alignment: AlignmentType.CENTER,
-                        spacing: { after: 400 }
-                    }),
-                    new Paragraph({
-                        children: [new TextRun({ text: `Muallif: ${order.authorName || 'Muallif'}`, bold: true, size: 28 })],
-                        alignment: AlignmentType.RIGHT,
-                        spacing: { before: 2000, after: 1400 }
-                    }),
-                    new Paragraph({
-                        children: [new TextRun({ text: `${currentYear}-yil`, bold: true, size: 24 })],
-                        alignment: AlignmentType.CENTER,
-                    }),
-                    new Paragraph({ text: "", pageBreakBefore: true })
+                        spacing: { after: 800 }
+                    })
                 ];
             }
         } else {
