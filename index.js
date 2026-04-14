@@ -666,6 +666,7 @@ TALABLAR:
             ];
         }
 
+        const isScientificMaqola = order.service === 'Maqola yozib berish' && order.style === 'Ilmiy (Scientific)';
         const lines = responseText.split('\n');
         for (let line of lines) {
             let cleanLine = line.trim();
