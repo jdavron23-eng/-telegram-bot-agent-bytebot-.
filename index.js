@@ -348,7 +348,7 @@ bot.on('photo', async (ctx) => {
 // -------------------------------------------------------------
 // CORE AI GENERATION HELPERS
 // -------------------------------------------------------------
-async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisiz.") {
+async function callAI(prompt, systemPrompt = "Siz dunyoning eng nufuzli universitetlari professori, akademik olim va professional publitsistsiz. Sizning bilimingiz o'ta chuqur, uslubingiz mukammal va tahlillaringiz professional-akademik darajadadir.") {
     const aiErrors = [];
     
     // 1. Groq Cloud
@@ -549,13 +549,13 @@ TALABLAR:
                     
                     let stagePrompt = "";
                     if (isIndependent) {
-                        // Plan-based Expert Stages for Mustaqil ish
-                        const expertInstr = "Siz ushbu soha ekspertisiz. Har bir gapni o'ta chuqur tahlil, statistikalar va ilmiy misollar bilan boyitib yozing. Matn hajmi (betlar soni) mijoz uchun hayotiy muhim, shuning uchun hechni qisqartirmang!";
+                        // Plan-based Expert Stages for Mustaqil ish (World-Class Intelligence)
+                        const expertInstr = "Siz ushbu soha professori va dunyo darajasidagi ekspertisiz. Har bir gapni o'ta chuqur tahlil, zamonaviy nazariyalar, statistikalar va ilmiy misollar bilan boyitib yozing. Matn hajmi (betlar soni) mijoz uchun hayotiy muhim, shuning uchun 'suv ko'paytirmasdan', lekin har bir nuqtani o'ta mantiqiy va keng yoritib chiqishingiz shart!";
                         if (i === 1) stagePrompt = `${prompt}\n\nVazifa: ${expertInstr}\nREJA va KIRISH qismini yozing. REJA qismida 'REJA' so'zini yozib, tagidan bandlarini yozing. Mavzu nomini qayta yozmang!`;
-                        else if (i === 2) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\nMustaqil ishning 1-BOB qismini o'ta batafsil va ilmiy tarzda yozing.`;
-                        else if (i === 3) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n2-BOB qismini o'ta batafsil va misollar bilan yozing.`;
-                        else if (i === 4) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n3-BOB qismini o'ta batafsil va ilmiy xulosalar bilan yozing.`;
-                        else stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n4-BOB, XULOSA va ADABIYOTLAR RO'YXATI qismlarini yozing. Matnni hajm jihatidan maksimal darajaga yetkazib yakunlang.`;
+                        else if (i === 2) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\nMustaqil ishning 1-BOB qismini dunyo darajasidagi ilmiy-akademik tushunchalar bilan o'ta batafsil va tahliliy tarzda yozing. Hech narsani qisqartirmang!`;
+                        else if (i === 3) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n2-BOB qismini amaliy misollar, xorijiy tajribalar va tahlillar bilan o'ta batafsil yozing.`;
+                        else if (i === 4) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n3-BOB qismini chuqur kritik tahlil va ilmiy xulosalar bilan o'ta batafsil yozing.`;
+                        else stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n4-BOB, XULOSA va ADABIYOTLAR RO'YXATI qismlarini yozing. Matnni hajm jihatidan maksimal (hajmli va to'liq) darajaga yetkazib yakunlang.`;
                     } else {
                         // Narrative for Popular
                         if (i === 1) stagePrompt = `${prompt}\n\nVazifa: Matnning boshlang'ich qismini (taxminan 20%) yozing. Sarlavhadan boshlang. Bo'limlarga bo'lmang!`;
