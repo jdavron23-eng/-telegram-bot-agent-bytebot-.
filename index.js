@@ -540,19 +540,26 @@ TALABLAR:
                 const stage3 = await callAI(stage3Prompt);
                 responseText += stage3;
             } else {
-                // Narrative Chunking for Popular/Independent
-                const stagesCount = 5; // More stages for more volume (5-8 pages)
+                // Narrative/Plan Chunking for Popular/Independent
+                const isIndependent = order.service === 'Mustaqil ish yozib berish';
+                const stagesCount = 5; 
                 for (let i = 1; i <= stagesCount; i++) {
                     const progressVal = 40 + (i * 10);
                     await updateProgress(userId, msgId, progressVal, `${i}-qism yozilmoqda...`);
                     
                     let stagePrompt = "";
-                    if (i === 1) {
-                        stagePrompt = `${prompt}\n\nVazifa: Matnning boshlang'ich qismini (taxminan 20%) yozing. Sarlavhadan boshlang. Hech qanday bo'limlarga, kichik sarlavhalarga bo'lmang!`;
-                    } else if (i === stagesCount) {
-                        stagePrompt = `Avvalgi qism:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Matnni yakunlovchi qismini yozing (oxirgi 20%). Bo'limlarga, kichik sarlavhalarga bo'lmang!`;
+                    if (isIndependent) {
+                        // Plan-based stages for Mustaqil ish
+                        if (i === 1) stagePrompt = `${prompt}\n\nVazifa: REJA va KIRISH qismini yozing. Mavzu nomini qayta yozmang!`;
+                        else if (i === 2) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Mustaqil ishning 1-BOB (yoki 1-qism) qismini judayam batafsil yozing.`;
+                        else if (i === 3) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: 2-BOB (yoki 2-qism) qismini judayam batafsil yozing.`;
+                        else if (i === 4) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: 3-BOB (yoki 3-qism) qismini judayam batafsil yozing.`;
+                        else stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: 4-BOB, XULOSA va ADABIYOTLAR RO'YXATI qismlarini yozing. Matnni yakunlang.`;
                     } else {
-                        stagePrompt = `Avvalgi qism:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Matnni chuqur tahliliy tarzda davom ettiring (keyingi 20%). Bo'limlarga bo'lmang!`;
+                        // Narrative for Popular
+                        if (i === 1) stagePrompt = `${prompt}\n\nVazifa: Matnning boshlang'ich qismini (taxminan 20%) yozing. Sarlavhadan boshlang. Bo'limlarga bo'lmang!`;
+                        else if (i === stagesCount) stagePrompt = `Avvalgi qism:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Matnni yakunlovchi qismini yozing (oxirgi 20%). Bo'limlarga bo'lmang!`;
+                        else stagePrompt = `Avvalgi qism:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Matnni chuqur tahliliy tarzda davom ettiring (keyingi 20%). Bo'limlarga bo'lmang!`;
                     }
                     
                     const chunk = await callAI(stagePrompt);
@@ -691,10 +698,16 @@ TALABLAR:
             let isScientificTitle = isScientificMaqola && paragraphs.length < 25 && upperLine === cleanLine && cleanLine.length > 5;
             
             const isPopular = order.style === 'Ommabop (Popular)';
+            const isIndependent = order.service === 'Mustaqil ish yozib berish';
             const isHeaderAllowed = isHeading || (scientificHeadings.some(h => upperLine.includes(h)) || isScientificTitle);
 
-            // 14pt font size for Popular articles (size 28)
-            const fontSize = isPopular ? 28 : 22;
+            // Font size: Mustaqil ish - 12pt (24), Popular - 14pt (28), Scientific - 11pt (22)
+            let fontSize = 22;
+            if (isPopular) fontSize = 28;
+            if (isIndependent) fontSize = 24;
+
+            // Skip repetitive topic title on the start of 2nd page (mustaqil ish case)
+            if (paragraphs.length === 16 && isIndependent && upperLine.includes((order.topic || '').toUpperCase())) continue;
 
             if (isHeaderAllowed && !isLabelPara && !isPopular) {
                 paragraphs.push(new Paragraph({
