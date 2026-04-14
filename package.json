@@ -7,6 +7,9 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.88.0",
+    "@google/generative-ai": "^0.24.1",
+    "docx": "^9.6.1",
     "dotenv": "^16.3.1",
     "telegraf": "^4.15.0"
   },
