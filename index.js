@@ -549,8 +549,14 @@ TALABLAR:
                     
                     let stagePrompt = "";
                     if (isIndependent) {
-                        // Plan-based Expert Stages for Mustaqil ish (World-Class Intelligence)
-                        const expertInstr = "Siz ushbu soha professori va dunyo darajasidagi ekspertisiz. Har bir gapni o'ta chuqur tahlil, zamonaviy nazariyalar, statistikalar va ilmiy misollar bilan boyitib yozing. Matn hajmi (betlar soni) mijoz uchun hayotiy muhim, shuning uchun 'suv ko'paytirmasdan', lekin har bir nuqtani o'ta mantiqiy va keng yoritib chiqishingiz shart!";
+                        // Plan-based Expert Stages with Explicit Word Targets (1000+ per stage for volume)
+                        const stageWords = Math.ceil(targetWords / stagesCount);
+                        const expertInstr = `Siz dunyoning eng aqlli va bilimdon professori hamda akademik yozuvchisiz. Ushbu bobni o'ta chuqur tahliliy, akademik va ilmiy tarzda juda KENG yozib berishingiz shart. 
+TALABLAR:
+- Ushbu bosqichda kamida ${stageWords} ta so'zdan iborat matn yozing.
+- HECH QACHON yakunlamang yoki umumlashtirmang, har bir fikrni misollar va nazariyalar bilan o'ta batafsil yoyib tushuntiring.
+- Mijoz har bir bet uchun pul to'lagan, shuning uchun hajm maksimal bo'lishi hayotiy muhim!`;
+
                         if (i === 1) stagePrompt = `${prompt}\n\nVazifa: ${expertInstr}\nREJA va KIRISH qismini yozing. REJA qismida 'REJA' so'zini yozib, tagidan bandlarini yozing. Mavzu nomini qayta yozmang!`;
                         else if (i === 2) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\nMustaqil ishning 1-BOB qismini dunyo darajasidagi ilmiy-akademik tushunchalar bilan o'ta batafsil va tahliliy tarzda yozing. Hech narsani qisqartirmang!`;
                         else if (i === 3) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n2-BOB qismini amaliy misollar, xorijiy tajribalar va tahlillar bilan o'ta batafsil yozing.`;
