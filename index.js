@@ -349,7 +349,7 @@ bot.on('photo', async (ctx) => {
 // CORE AI GENERATION HELPERS
 // -------------------------------------------------------------
 async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisiz.") {
-    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const aiErrors = [];
     
     // 1. Groq Cloud
     if (process.env.GROQ_API_KEY) {
@@ -368,49 +368,33 @@ async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisi
                 const data = await resp.json();
                 if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
             } else {
-                const err = await resp.text();
-                console.log(`Groq HTTP Error ${resp.status}: ${err}`);
+                const err = await resp.json().catch(() => ({}));
+                aiErrors.push(`Groq: ${err.error?.message || resp.status}`);
             }
-        } catch (e) { console.log("Groq fetch Error:", e.message); }
+        } catch (e) { aiErrors.push(`Groq Error: ${e.message}`); }
     }
 
-    // 2. Anthropic Claude
-    if (process.env.ANTHROPIC_API_KEY) {
-        try {
-            const Anthropic = require('@anthropic-ai/sdk');
-            const cl = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-            const msg = await cl.messages.create({
-                model: "claude-3-5-sonnet-20241022",
-                max_tokens: 4000,
-                messages: [{ role: "user", content: `${systemPrompt}\n\n${prompt}` }]
-            });
-            if (msg.content?.[0]?.text) return msg.content[0].text;
-        } catch (e) { console.log("Claude Error:", e.message); }
-    }
-
-    // 3. Google Gemini
+    // 2. Google Gemini (Switching to V1 Stable)
     if (process.env.GEMINI_API_KEY) {
         try {
-            const { GoogleGenerativeAI } = require('@google/generative-ai');
-            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-            // Use 'gemini-1.5-flash' but with a safe configuration
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-            const result = await model.generateContent(`${systemPrompt}\n\n${prompt}`);
-            if (result.response?.text()) return result.response.text();
-        } catch (e) { 
-            console.log("Gemini Error:", e.message);
-            // Quick fallback to gemini-pro if flash fails
-            try {
-                const { GoogleGenerativeAI } = require('@google/generative-ai');
-                const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-                const result = await model.generateContent(`${systemPrompt}\n\n${prompt}`);
-                if (result.response?.text()) return result.response.text();
-            } catch (e2) { console.log("Gemini Pro Fallback Error:", e2.message); }
-        }
+            const resp = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: `${systemPrompt}\n\n${prompt}` }] }]
+                })
+            });
+            if (resp.ok) {
+                const data = await resp.json();
+                if (data.candidates?.[0]?.content?.parts?.[0]?.text) return data.candidates[0].content.parts[0].text;
+            } else {
+                const err = await resp.json().catch(() => ({}));
+                aiErrors.push(`Gemini: ${err.error?.message || resp.status}`);
+            }
+        } catch (e) { aiErrors.push(`Gemini Error: ${e.message}`); }
     }
 
-    // 4. OpenRouter (Multi-AI Fallback)
+    // 3. OpenRouter (DeepSeek)
     if (process.env.OPENROUTER_API_KEY) {
         try {
             const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -430,13 +414,27 @@ async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisi
                 const data = await resp.json();
                 if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
             } else {
-                const err = await resp.text();
-                console.log(`OpenRouter HTTP Error ${resp.status}: ${err}`);
+                const err = await resp.json().catch(() => ({}));
+                aiErrors.push(`OpenRouter: ${err.error?.message || resp.status}`);
             }
-        } catch (e) { console.log("OpenRouter fetch Error:", e.message); }
+        } catch (e) { aiErrors.push(`OpenRouter Error: ${e.message}`); }
     }
 
-    throw new Error("Barcha AI tizimlari band.");
+    // 4. Anthropic Claude (Fallback)
+    if (process.env.ANTHROPIC_API_KEY) {
+        try {
+            const Anthropic = require('@anthropic-ai/sdk');
+            const cl = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+            const msg = await cl.messages.create({
+                model: "claude-3-5-sonnet-20241022",
+                max_tokens: 4000,
+                messages: [{ role: "user", content: `${systemPrompt}\n\n${prompt}` }]
+            });
+            if (msg.content?.[0]?.text) return msg.content[0].text;
+        } catch (e) { aiErrors.push(`Claude: ${e.message}`); }
+    }
+
+    throw new Error(aiErrors.join(" | ") || "Barcha AI tizimlari band.");
 }
 
 async function processAIGeneration(userId, order, existingMsgId = null) {
@@ -738,11 +736,17 @@ TALABLAR:
         }
         ordersCache.delete(userId);
     } catch (err) {
-        console.error("AI Error:", err);
+        console.error("AI Error Chain:", err);
         if (msgId) bot.telegram.deleteMessage(userId, msgId).catch(()=>{});
-        bot.telegram.sendMessage(userId, "⚠️ Kechirasiz, tarmoq yoki AI tizimlarida uzilish yuz berdi. Iltimos, qayta urinib ko'ring.", 
-            Markup.inlineKeyboard([[Markup.button.callback("🔄 Qaytadan yozish", "retry_gen_" + userId)]])
-        ).catch(()=>{});
+        
+        const friendlyError = err.message.includes("|") 
+            ? `⚠️ <b>Tizim xatoligi (API ma'lumotlari):</b>\n\n${err.message.split(" | ").join("\n")}\n\nIltimos, yuqoridagi xatoliklarni bartaraf eting yoki keyinroq urinib ko'ring.`
+            : "⚠️ Kechirasiz, tarmoq yoki AI tizimlarida uzilish yuz berdi. Iltimos, qayta urinib ko'ring.";
+
+        bot.telegram.sendMessage(userId, friendlyError, {
+            parse_mode: 'HTML',
+            ...Markup.inlineKeyboard([[Markup.button.callback("🔄 Qaytadan yozish", "retry_gen_" + userId)]])
+        }).catch(()=>{});
     }
 }
 
