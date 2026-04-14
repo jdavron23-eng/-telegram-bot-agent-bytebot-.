@@ -541,20 +541,23 @@ TALABLAR:
                 responseText += stage3;
             } else {
                 // Narrative Chunking for Popular/Independent
-                await updateProgress(userId, msgId, 40, "1-qism yozilmoqda...");
-                const s1Prompt = `${prompt}\n\nVazifa: Matnning birinchi qismini (taxminan 40%) yozing. Sarlavhadan boshlang. Bo'limlarga bo'lmang!`;
-                const s1 = await callAI(s1Prompt);
-                responseText += s1 + "\n\n";
-
-                await updateProgress(userId, msgId, 65, "2-qism yozilmoqda...");
-                const s2Prompt = `Avvalgi qism:\n${s1.substring(Math.max(0, s1.length - 1000))}...\n\nVazifa: Matnni chuqur tahliliy tarzda davom ettiring (keyingi 40%). Bo'limlarga bo'lmang!`;
-                const s2 = await callAI(s2Prompt);
-                responseText += s2 + "\n\n";
-
-                await updateProgress(userId, msgId, 85, "So'nggi qism yozilmoqda...");
-                const s3Prompt = `Avvalgi qism:\n${s2.substring(Math.max(0, s2.length - 1000))}...\n\nVazifa: Matnni yakunlovchi qismini yozing. Bo'limlarga bo'lmang!`;
-                const s3 = await callAI(s3Prompt);
-                responseText += s3;
+                const stagesCount = 5; // More stages for more volume (5-8 pages)
+                for (let i = 1; i <= stagesCount; i++) {
+                    const progressVal = 40 + (i * 10);
+                    await updateProgress(userId, msgId, progressVal, `${i}-qism yozilmoqda...`);
+                    
+                    let stagePrompt = "";
+                    if (i === 1) {
+                        stagePrompt = `${prompt}\n\nVazifa: Matnning boshlang'ich qismini (taxminan 20%) yozing. Sarlavhadan boshlang. Hech qanday bo'limlarga, kichik sarlavhalarga bo'lmang!`;
+                    } else if (i === stagesCount) {
+                        stagePrompt = `Avvalgi qism:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Matnni yakunlovchi qismini yozing (oxirgi 20%). Bo'limlarga, kichik sarlavhalarga bo'lmang!`;
+                    } else {
+                        stagePrompt = `Avvalgi qism:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Matnni chuqur tahliliy tarzda davom ettiring (keyingi 20%). Bo'limlarga bo'lmang!`;
+                    }
+                    
+                    const chunk = await callAI(stagePrompt);
+                    responseText += (i === 1 ? "" : "\n\n") + chunk;
+                }
             }
         } else {
             // SINGLE STAGE (For small orders)
@@ -602,7 +605,7 @@ TALABLAR:
                 // Ommabop maqola uchun ixcham header (Muallif chapda, Sarlavha o'rtada katti qora)
                 paragraphs = [
                     new Paragraph({
-                        children: [new TextRun({ text: order.authorName || 'Muallif', bold: true, size: 22 })],
+                        children: [new TextRun({ text: `MUALLIF: ${order.authorName || 'Muallif'}`, bold: true, size: 22 })],
                         alignment: AlignmentType.LEFT,
                         spacing: { before: 200, after: 400 }
                     }),
@@ -687,13 +690,15 @@ TALABLAR:
             let isLabelPara = metadataLabels.some(l => upperLine.startsWith(l));
             let isScientificTitle = isScientificMaqola && paragraphs.length < 25 && upperLine === cleanLine && cleanLine.length > 5;
             
-            // Ommabop maqolada kichik sarlavhalar bo'lmasligi kerak (faqat asosiy sarlavhadan tashqari)
             const isPopular = order.style === 'Ommabop (Popular)';
             const isHeaderAllowed = isHeading || (scientificHeadings.some(h => upperLine.includes(h)) || isScientificTitle);
 
+            // 14pt font size for Popular articles (size 28)
+            const fontSize = isPopular ? 28 : 22;
+
             if (isHeaderAllowed && !isLabelPara && !isPopular) {
                 paragraphs.push(new Paragraph({
-                    children: [new TextRun({ text: cleanLine, bold: true, size: 22 })],
+                    children: [new TextRun({ text: cleanLine, bold: true, size: fontSize })],
                     alignment: AlignmentType.LEFT,
                     spacing: { before: 240, after: 120 }
                 }));
@@ -704,19 +709,17 @@ TALABLAR:
                 const content = cleanLine.substring(colonIndex + 1);
                 paragraphs.push(new Paragraph({
                     children: [
-                        new TextRun({ text: label, bold: true, size: 22 }),
-                        new TextRun({ text: content, size: 22 })
+                        new TextRun({ text: label, bold: true, size: fontSize }),
+                        new TextRun({ text: content, size: fontSize })
                     ],
-                    alignment: AlignmentType.JUSTIFIED,
-                    indent: { firstLine: 720 },
-                    spacing: { line: 276, after: 120 }
+                    alignment: AlignmentType.LEFT,
+                    spacing: { after: 120 }
                 }));
             } else {
                 paragraphs.push(new Paragraph({
-                    children: [new TextRun({ text: cleanLine, size: 22 })],
-                    alignment: AlignmentType.JUSTIFIED,
-                    indent: { firstLine: 720 },
-                    spacing: { line: 276, after: 120 }
+                    children: [new TextRun({ text: cleanLine, size: fontSize })],
+                    alignment: AlignmentType.LEFT,
+                    spacing: { after: 120 }
                 }));
             }
         }
