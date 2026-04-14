@@ -492,15 +492,13 @@ TALABLAR:
 - Mavzu: ${order.topic}
 - Til: ${order.language}
 
-STRUKTURA:
-1. Jalb qiluvchi sarlavha.
-2. Kirish (Lid).
-3. Mavzuni yorituvchi qiziqarli boblar.
-4. Xulosa.
+MAQOLA STRUKTURASI:
+1. JALB QILUVCHI SARLAVHA.
+2. MAVZU HAQIDA CHUQUR MULOHAZA VA TAHLILIY MATN. (Hech qanday bo'limlarga, kichik sarlavhalarga bo'lmang! Matn bitta yaxlit, chuqur tahliliy oqimda bo'lishi shart).
 
 TALABLAR:
-- Umumiy hajm kamida ${targetWords} so'z bo'lishi shart.
-- Matn tushunarli, qiziqarli va ravon bo'lishi shart.`;
+- Jami hajm kamida ${targetWords} so'z bo'lishi shart.
+- Matn tushunarli, qiziqarli, ILMIY-OMMABOP va ravon bo'lishi shart.`;
             }
         } else {
             prompt = `Siz malakali o'qituvchi va professor darajasidagi yozuvchisiz. Menga quyidagi ma'lumotlar asosida oliy ta'lim darajasidagi mustaqil ish yozib bering:
@@ -524,20 +522,40 @@ TALABLAR:
 
         if (order.pages && (parseInt(order.pages) || 5) > 5) {
             // MULTI-STAGE GENERATION (For high page counts)
-            await updateProgress(userId, msgId, 40, "1-qism: Metadata va Kirish yozilmoqda...");
-            const stage1Prompt = `${prompt}\n\nVazifa: Faqat METADATA BLOKLARI va KIRISH qismini yozing.`;
-            const stage1 = await callAI(stage1Prompt);
-            responseText += stage1 + "\n\n";
+            const isScientific = order.service === 'Maqola yozib berish' && order.style === 'Ilmiy (Scientific)';
+            
+            if (isScientific) {
+                await updateProgress(userId, msgId, 40, "1-qism: Metadata va Kirish yozilmoqda...");
+                const stage1Prompt = `${prompt}\n\nVazifa: Faqat METADATA BLOKLARI va KIRISH qismini yozing.`;
+                const stage1 = await callAI(stage1Prompt);
+                responseText += stage1 + "\n\n";
 
-            await updateProgress(userId, msgId, 60, "2-qism: Asosiy tadqiqot qismi yozilmoqda...");
-            const stage2Prompt = `Avvalgi qism:\n${stage1.substring(0, 1000)}...\n\nVazifa: TADQIQOT METODOLOGIYA VA NATIJALAR qismlarini o'ta batafsil yozing.`;
-            const stage2 = await callAI(stage2Prompt);
-            responseText += stage2 + "\n\n";
+                await updateProgress(userId, msgId, 60, "2-qism: Asosiy tadqiqot qismi yozilmoqda...");
+                const stage2Prompt = `Avvalgi qism:\n${stage1.substring(0, 1000)}...\n\nVazifa: TADQIQOT METODOLOGIYA VA NATIJALAR qismlarini o'ta batafsil yozing.`;
+                const stage2 = await callAI(stage2Prompt);
+                responseText += stage2 + "\n\n";
 
-            await updateProgress(userId, msgId, 85, "3-qism: Xulosa va Adabiyotlar yozilmoqda...");
-            const stage3Prompt = `Avvalgi qism:\n${stage2.substring(0, 1000)}...\n\nVazifa: MUHOKAMA, XULOSA va ADABIYOTLAR RO'YXATI qismlarini yozing.`;
-            const stage3 = await callAI(stage3Prompt);
-            responseText += stage3;
+                await updateProgress(userId, msgId, 85, "3-qism: Xulosa va Adabiyotlar yozilmoqda...");
+                const stage3Prompt = `Avvalgi qism:\n${stage2.substring(0, 1000)}...\n\nVazifa: MUHOKAMA, XULOSA va ADABIYOTLAR RO'YXATI qismlarini yozing.`;
+                const stage3 = await callAI(stage3Prompt);
+                responseText += stage3;
+            } else {
+                // Narrative Chunking for Popular/Independent
+                await updateProgress(userId, msgId, 40, "1-qism yozilmoqda...");
+                const s1Prompt = `${prompt}\n\nVazifa: Matnning birinchi qismini (taxminan 40%) yozing. Sarlavhadan boshlang. Bo'limlarga bo'lmang!`;
+                const s1 = await callAI(s1Prompt);
+                responseText += s1 + "\n\n";
+
+                await updateProgress(userId, msgId, 65, "2-qism yozilmoqda...");
+                const s2Prompt = `Avvalgi qism:\n${s1.substring(Math.max(0, s1.length - 1000))}...\n\nVazifa: Matnni chuqur tahliliy tarzda davom ettiring (keyingi 40%). Bo'limlarga bo'lmang!`;
+                const s2 = await callAI(s2Prompt);
+                responseText += s2 + "\n\n";
+
+                await updateProgress(userId, msgId, 85, "So'nggi qism yozilmoqda...");
+                const s3Prompt = `Avvalgi qism:\n${s2.substring(Math.max(0, s2.length - 1000))}...\n\nVazifa: Matnni yakunlovchi qismini yozing. Bo'limlarga bo'lmang!`;
+                const s3 = await callAI(s3Prompt);
+                responseText += s3;
+            }
         } else {
             // SINGLE STAGE (For small orders)
             responseText = await callAI(prompt);
@@ -683,8 +701,12 @@ TALABLAR:
 
             let isLabelPara = metadataLabels.some(l => upperLine.startsWith(l));
             let isScientificTitle = isScientificMaqola && paragraphs.length < 25 && upperLine === cleanLine && cleanLine.length > 5;
+            
+            // Ommabop maqolada kichik sarlavhalar bo'lmasligi kerak (faqat asosiy sarlavhadan tashqari)
+            const isPopular = order.style === 'Ommabop (Popular)';
+            const isHeaderAllowed = isHeading || (scientificHeadings.some(h => upperLine.includes(h)) || isScientificTitle);
 
-            if ((scientificHeadings.some(h => upperLine.includes(h)) || isHeading || isScientificTitle) && !isLabelPara) {
+            if (isHeaderAllowed && !isLabelPara && !isPopular) {
                 paragraphs.push(new Paragraph({
                     children: [new TextRun({ text: cleanLine, bold: true, size: 22 })],
                     alignment: AlignmentType.LEFT,
