@@ -549,12 +549,13 @@ TALABLAR:
                     
                     let stagePrompt = "";
                     if (isIndependent) {
-                        // Plan-based stages for Mustaqil ish
-                        if (i === 1) stagePrompt = `${prompt}\n\nVazifa: REJA va KIRISH qismini yozing. Mavzu nomini qayta yozmang!`;
-                        else if (i === 2) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: Mustaqil ishning 1-BOB (yoki 1-qism) qismini judayam batafsil yozing.`;
-                        else if (i === 3) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: 2-BOB (yoki 2-qism) qismini judayam batafsil yozing.`;
-                        else if (i === 4) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: 3-BOB (yoki 3-qism) qismini judayam batafsil yozing.`;
-                        else stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: 4-BOB, XULOSA va ADABIYOTLAR RO'YXATI qismlarini yozing. Matnni yakunlang.`;
+                        // Plan-based Expert Stages for Mustaqil ish
+                        const expertInstr = "Siz ushbu soha ekspertisiz. Har bir gapni o'ta chuqur tahlil, statistikalar va ilmiy misollar bilan boyitib yozing. Matn hajmi (betlar soni) mijoz uchun hayotiy muhim, shuning uchun hechni qisqartirmang!";
+                        if (i === 1) stagePrompt = `${prompt}\n\nVazifa: ${expertInstr}\nREJA va KIRISH qismini yozing. Mavzu nomini qayta yozmang!`;
+                        else if (i === 2) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\nMustaqil ishning 1-BOB qismini o'ta batafsil va ilmiy tarzda yozing.`;
+                        else if (i === 3) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n2-BOB qismini o'ta batafsil va misollar bilan yozing.`;
+                        else if (i === 4) stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n3-BOB qismini o'ta batafsil va ilmiy xulosalar bilan yozing.`;
+                        else stagePrompt = `Avvalgi qismlar:\n${responseText.substring(Math.max(0, responseText.length - 1000))}...\n\nVazifa: ${expertInstr}\n4-BOB, XULOSA va ADABIYOTLAR RO'YXATI qismlarini yozing. Matnni hajm jihatidan maksimal darajaga yetkazib yakunlang.`;
                     } else {
                         // Narrative for Popular
                         if (i === 1) stagePrompt = `${prompt}\n\nVazifa: Matnning boshlang'ich qismini (taxminan 20%) yozing. Sarlavhadan boshlang. Bo'limlarga bo'lmang!`;
@@ -701,13 +702,19 @@ TALABLAR:
             const isIndependent = order.service === 'Mustaqil ish yozib berish';
             const isHeaderAllowed = isHeading || (scientificHeadings.some(h => upperLine.includes(h)) || isScientificTitle);
 
-            // Font size: Mustaqil ish - 12pt (24), Popular - 14pt (28), Scientific - 11pt (22)
+            // Set correct font small/big based on style
             let fontSize = 22;
             if (isPopular) fontSize = 28;
             if (isIndependent) fontSize = 24;
 
-            // Skip repetitive topic title on the start of 2nd page (mustaqil ish case)
-            if (paragraphs.length === 16 && isIndependent && upperLine.includes((order.topic || '').toUpperCase())) continue;
+            // Re-add centered title on 2nd page (Mustaqil ish)
+            if (paragraphs.length === 16 && isIndependent) {
+                paragraphs.push(new Paragraph({
+                    children: [new TextRun({ text: (order.topic || '').toUpperCase(), bold: true, size: 30 })],
+                    alignment: AlignmentType.CENTER,
+                    spacing: { after: 400 }
+                }));
+            }
 
             if (isHeaderAllowed && !isLabelPara && !isPopular) {
                 paragraphs.push(new Paragraph({
