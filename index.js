@@ -393,10 +393,21 @@ async function callAI(prompt, systemPrompt = "Siz akademik ekspert va yozuvchisi
         try {
             const { GoogleGenerativeAI } = require('@google/generative-ai');
             const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+            // Use 'gemini-1.5-flash' but with a safe configuration
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
             const result = await model.generateContent(`${systemPrompt}\n\n${prompt}`);
             if (result.response?.text()) return result.response.text();
-        } catch (e) { console.log("Gemini Error:", e.message); }
+        } catch (e) { 
+            console.log("Gemini Error:", e.message);
+            // Quick fallback to gemini-pro if flash fails
+            try {
+                const { GoogleGenerativeAI } = require('@google/generative-ai');
+                const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                const result = await model.generateContent(`${systemPrompt}\n\n${prompt}`);
+                if (result.response?.text()) return result.response.text();
+            } catch (e2) { console.log("Gemini Pro Fallback Error:", e2.message); }
+        }
     }
 
     // 4. OpenRouter (Multi-AI Fallback)
