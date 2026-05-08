@@ -2598,10 +2598,20 @@ const { spawn, exec } = require('child_process');
 const localtunnel = require('localtunnel');
 const PORT = process.env.PORT || 3000;
 
+// Bulut muhitni aniqlash (Render, Railway va boshqalar)
+const IS_CLOUD = !!(process.env.RENDER || process.env.RAILWAY_ENVIRONMENT || process.env.FLY_APP_NAME);
+const INITIAL_WEB_APP_URL = process.env.WEB_APP_URL || null; // Oldindan o'rnatilgan URL (bulutda)
+
 let currentTunnelProvider = 0; // 0: pinggy (PRIMARY), 1: localtunnel, 2: localhost.run
 let tunnelProcess = null;
 
 async function startTunnel() {
+    // Bulut muhitda tunnel kerak emas
+    if (IS_CLOUD || INITIAL_WEB_APP_URL) {
+        console.log("[TUNNEL] Bulut muhit aniqlandi — tunnel o'chirildi.");
+        return;
+    }
+
     const providers = [
         async () => {
             console.log("[TUNNEL] Provider: Pinggy...");
@@ -2691,39 +2701,47 @@ function switchProvider() {
     setTimeout(startTunnel, 2000);
 }
 
-// Health check - yanada tezkor (30 soniya)
-setInterval(() => {
-    if (process.env.WEB_APP_URL) {
-        const https = require('https');
-        https.get(process.env.WEB_APP_URL, (res) => {
-            if (res.statusCode >= 500 || res.statusCode === 404) {
-                console.log(`[HEALTH] Tunnel xatosi (${res.statusCode}). Switcher ishga tushdi.`);
+// Health check - faqat lokal muhitda (tunnel ishlatilganda)
+if (!IS_CLOUD && !INITIAL_WEB_APP_URL) {
+    setInterval(() => {
+        if (process.env.WEB_APP_URL) {
+            const https = require('https');
+            https.get(process.env.WEB_APP_URL, (res) => {
+                if (res.statusCode >= 500 || res.statusCode === 404) {
+                    console.log(`[HEALTH] Tunnel xatosi (${res.statusCode}). Switcher ishga tushdi.`);
+                    switchProvider();
+                }
+            }).on('error', () => {
+                console.log("[HEALTH] Ulanishda xato. Switcher ishga tushdi.");
                 switchProvider();
-            }
-        }).on('error', () => {
-            console.log("[HEALTH] Ulanishda xato. Switcher ishga tushdi.");
-            switchProvider();
-        });
-    }
-}, 30000);
+            });
+        }
+    }, 30000);
+
+    // Tunnel yopilib qolmasligi uchun har 30 soniyada ping yuboramiz
+    setInterval(() => {
+        if (process.env.WEB_APP_URL) {
+            const https = require('https');
+            https.get(process.env.WEB_APP_URL, () => {}).on('error', () => {});
+        }
+    }, 30000);
+} else {
+    console.log("[CLOUD] Bulut muhit — tunnel health check va ping o'chirildi.");
+}
 
 const server = app.listen(PORT, () => {
     console.log(`Express server portda ishga tushdi: ${PORT}`);
-    if (!process.env.WEB_APP_URL) startTunnel();
+    if (IS_CLOUD || INITIAL_WEB_APP_URL) {
+        console.log(`[CLOUD] Doimiy URL: ${process.env.WEB_APP_URL}`);
+    } else {
+        startTunnel();
+    }
 });
 
 // Jonli timer uchun har 10 soniyada dashboardlarni yangilash
 setInterval(() => {
     updateAllActiveDashboards();
 }, 10000);
-
-// Tunnel yopilib qolmasligi uchun har 30 soniyada ping yuboramiz
-setInterval(() => {
-    if (process.env.WEB_APP_URL) {
-        const https = require('https');
-        https.get(process.env.WEB_APP_URL, () => {}).on('error', () => {});
-    }
-}, 30000);
 
 // Graceful stop
 process.once('SIGINT', () => { bot.stop('SIGINT'); server.close(); });
