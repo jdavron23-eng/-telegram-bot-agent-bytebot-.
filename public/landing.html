@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteBot — Ta'lim uchun AI Agentlari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --accent: #9333ea;
+            --bg: #ffffff;
+            --text: #111827;
+            --text-muted: #4b5563;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        nav {
+            padding: 24px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            background: #f3f4f6;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .badge span {
+            color: var(--primary);
+            font-weight: 700;
+            margin-right: 6px;
+        }
+
+        .hero {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        h1 {
+            font-size: clamp(40px, 8vw, 72px);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+
+        h1 span {
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .description {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #111827;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background: #000000;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: var(--text);
+        }
+
+        .hero-image {
+            margin-top: 60px;
+            width: 100%;
+            max-width: 1000px;
+            aspect-ratio: 16/9;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80%;
+            height: 80%;
+            background: url('https://img.freepik.com/free-vector/digital-futuristic-ai-technology-background_53876-119154.jpg?w=1000') center/cover;
+            opacity: 0.1;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 48px; }
+            .hero { padding: 40px 5%; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon">B</div>
+            bytebot
+        </a>
+    </nav>
+
+    <main class="hero">
+        <div class="badge"><span>Sun'iy Intellekt</span> Ta'lim agenti</div>
+        <h1>Ustozlar uchun <span>aqlli AI agentlar</span> — keng miqyosda.</h1>
+        <p class="description">
+            Vazifani tavsiflang va ByteBot dars rejasi, testlar, taqdimotlar va ilmiy maqolalarni bir necha soniya ichida professional darajada tayyorlaydi.
+        </p>
+        
+        <div class="cta-group">
+            <a href="https://t.me/Byte_uz_bot" class="btn btn-primary">
+                Botni Boshlash ↗
+            </a>
+            <a href="/docs.html" class="btn btn-secondary">
+                Qo'llanma
+            </a>
+        </div>
+
+        <div class="hero-image">
+            <div style="position:absolute; top: 15px; left: 15px; display:flex; gap:6px;">
+                <div style="width:12px; height:12px; border-radius:50%; background:#ff5f56;"></div>
+                <div style="width:12px; height:12px; border-radius:50%; background:#ffbd2e;"></div>
+                <div style="width:12px; height:12px; border-radius:50%; background:#27c93f;"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="padding: 40px 5%; text-align: center; color: var(--text-muted); font-size: 14px; border-top: 1px solid #f3f4f6; margin-top: 80px;">
+        &copy; 2026 ByteBot Uzbekistan. Barcha huquqlar himoyalangan. @Byte_uz_bot
+    </footer>
+</body>
+</html>

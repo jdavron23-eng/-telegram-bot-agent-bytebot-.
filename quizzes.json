@@ -1,0 +1,1024 @@
+{
+  "337652359": {
+    "topic": "Mavzu ko'rsatilmadi",
+    "questions": [
+      {
+        "id": "1",
+        "question": "Inson turlari tasnifida qaysi xususiyat asosiy rol o'ynaydi?",
+        "options": [
+          "Tashqi ko'rinish",
+          "Genetik xususiyatlar",
+          "Ichki a'zolar tuzilishi",
+          "Psixologik xususiyatlar"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "2",
+        "question": "Insonning biologik turlari qanday tasniflanadi?",
+        "options": [
+          "Faqat geografik joylashuviga ko'ra",
+          "Faqat genetik xususiyatlariga ko'ra",
+          "Geografik joylashuv, genetik xususiyatlar va tashqi ko'rinishiga ko'ra",
+          "Psixologik xususiyatlariga ko'ra"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "3",
+        "question": "Insonning antropologik turlari qaysi asosda ajratiladi?",
+        "options": [
+          "Faqat tashqi ko'rinishiga ko'ra",
+          "Faqat genetik xususiyatlariga ko'ra",
+          "Tashqi ko'rinish, geografik joylashuv va madaniy xususiyatlariga ko'ra",
+          "Psixologik xususiyatlariga ko'ra"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "4",
+        "question": "Qaysi inson turining vakillari eng ko'p sonli aholiga ega?",
+        "options": [
+          "Yevropoid",
+          "Mongoloid",
+          "Negroid",
+          "Avstraloid"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "5",
+        "question": "Inson turlarining geografik taqsimoti qanday omillar bilan belgilanadi?",
+        "options": [
+          "Faqat iqlim sharoitlari",
+          "Faqat geografik joylashuv",
+          "Iqlim sharoitlari, geografik joylashuv va tarixiy migratsiya",
+          "Psixologik xususiyatlar"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "6",
+        "question": "Insonning irqiy turlari qanday tasniflanadi?",
+        "options": [
+          "Faqat geografik joylashuviga ko'ra",
+          "Faqat genetik xususiyatlariga ko'ra",
+          "Geografik joylashuv, genetik xususiyatlar va tashqi ko'rinishiga ko'ra",
+          "Psixologik xususiyatlariga ko'ra"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "7",
+        "question": "Qaysi inson turining vakillari eng kam sonli aholiga ega?",
+        "options": [
+          "Yevropoid",
+          "Mongoloid",
+          "Negroid",
+          "Avstraloid"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "8",
+        "question": "Inson turlarining evolyutsiyasi qanday jarayonlar bilan belgilanadi?",
+        "options": [
+          "Faqat tabiiy tanlanish",
+          "Faqat genetik mutatsiyalar",
+          "Tabiiy tanlanish, genetik mutatsiyalar va migratsiya",
+          "Psixologik xususiyatlar"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "9",
+        "question": "Insonning irqiy xususiyatlarini qanday omillar belgilaydi?",
+        "options": [
+          "Faqat geografik joylashuv",
+          "Faqat genetik xususiyatlar",
+          "Geografik joylashuv, genetik xususiyatlar va tashqi ko'rinish",
+          "Psixologik xususiyatlar"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "10",
+        "question": "Inson turlarining tasnifida qaysi soha asosiy rol o'ynaydi?",
+        "options": [
+          "Biologiya",
+          "Antropologiya",
+          "Psixologiya",
+          "Sotsiologiya"
+        ],
+        "correct": 1
+      }
+    ]
+  },
+  "569644319": {
+    "topic": "Mavzu ko'rsatilmadi",
+    "questions": [
+      {
+        "id": "1",
+        "question": "Chiziqli funksiya uchun quyidagi tenglama berilgan: y = 2x - 3. Agar x = 4 bo'lsa, y ning qiymati qanday bo'ladi?",
+        "options": [
+          "5",
+          "7",
+          "3",
+          "1"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "2",
+        "question": "Chiziqli funksiyani ifodalovchi grafikning quyidagi nuqtalari berilgan: (2, 4) va (4, 8). Ushbu chiziqli funksiyaning tenglamasi qanday bo'ladi?",
+        "options": [
+          "y = x + 2",
+          "y = 2x - 2",
+          "y = x - 2",
+          "y = 2x + 2"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "3",
+        "question": "Agar chiziqli funksiya y = 3x + 2 bo'lsa, unda x = -1 uchun y qiymati qanday bo'ladi?",
+        "options": [
+          "1",
+          "1",
+          "5",
+          "5"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "4",
+        "question": "Quyidagi chiziqli funksiyalardan qaysi biri y = 2x - 1 ga tengdir?",
+        "options": [
+          "y = x + x - 1",
+          "y = 2x + 1",
+          "y = x + x + 1",
+          "y = x - x - 1"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "5",
+        "question": "Chiziqli funksiya y = mx + b uchun quyidagi nuqtalar berilgan: (1, 3) va (2, 5). Ushbu chiziqli funksiyaning m va b qiymatlari qanday bo'ladi?",
+        "options": [
+          "m = 2, b = 1",
+          "m = 1, b = 2",
+          "m = 3, b = 2",
+          "m = 2, b = 2"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "6",
+        "question": "Agar chiziqli funksiya y = x + 2 bo'lsa, unda y = 7 uchun x qiymati qanday bo'ladi?",
+        "options": [
+          "3",
+          "5",
+          "7",
+          "9"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "7",
+        "question": "Quyidagi chiziqli funksiyalardan qaysi biri x o'qiga parallel bo'ladi?",
+        "options": [
+          "y = 2x + 1",
+          "y = x - 2",
+          "y = 3",
+          "y = x + 1"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "8",
+        "question": "Chiziqli funksiya y = mx + b uchun quyidagi nuqtalar berilgan: (0, 2) va (1, 4). Ushbu chiziqli funksiyaning m va b qiymatlari qanday bo'ladi?",
+        "options": [
+          "m = 2, b = 2",
+          "m = 1, b = 2",
+          "m = 3, b = 1",
+          "m = 2, b = 1"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "9",
+        "question": "Agar chiziqli funksiya y = 2x - 3 bo'lsa, unda x = -2 uchun y qiymati qanday bo'ladi?",
+        "options": [
+          "7",
+          "5",
+          "3",
+          "1"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "10",
+        "question": "Chiziqli funksiya y = mx + b uchun quyidagi nuqtalar berilgan: (2, 5) va (3, 7). Ushbu chiziqli funksiyaning m qiymati qanday bo'ladi?",
+        "options": [
+          "m = 1",
+          "m = 2",
+          "m = 3",
+          "m = 4"
+        ],
+        "correct": 1
+      }
+    ]
+  },
+  "1184295922": {
+    "topic": "Olma",
+    "questions": [
+      {
+        "id": "1",
+        "question": "Olmalarning xususiyatlari orasida qaysi biri quyosh nurlarining ta'siriga eng chidamli?",
+        "options": [
+          "Olmalarning rangi",
+          "Olmalarning ta'mi",
+          "Olmalarning qobig'i",
+          "Olmalarning mevasi"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "2",
+        "question": "Olma mevasining asosiy tarkibiy qismi qanddir. Qand miqdorining o'sishi bilan olmalarning qand miqdori qancha o'sadi?",
+        "options": [
+          "20%",
+          "15%",
+          "30%",
+          "25%"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "3",
+        "question": "Olmalarning xarakterli ta'mi quyidagi ta'sirlarning biridan kelib chiqadi:",
+        "options": [
+          "Olmalarning qobig'ining ta'siri",
+          "Olmalarning rangining ta'siri",
+          "Olmalarning mevasining ta'siri",
+          "Olmalarning shaklining ta'siri"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "4",
+        "question": "Olma mevasining xarakterli ta'mi uchun qand miqdori qancha bo'lishi kerak?",
+        "options": [
+          "20%",
+          "30%",
+          "15%",
+          "25%"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "5",
+        "question": "Olmalarning xarakterli ta'mi quyidagi ta'sirlarning biridan kelib chiqadi:",
+        "options": [
+          "Olmalarning qobig'ining ta'siri",
+          "Olmalarning mevasining ta'siri",
+          "Olmalarning rangining ta'siri",
+          "Olmalarning shaklining ta'siri"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "6",
+        "question": "Olmalarning xarakterli ta'mi uchun qand miqdori qancha bo'lishi kerak?",
+        "options": [
+          "15%",
+          "25%",
+          "20%",
+          "30%"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "7",
+        "question": "Olmalarning xarakterli ta'mi quyidagi ta'sirlarning biridan kelib chiqadi:",
+        "options": [
+          "Olmalarning shaklining ta'siri",
+          "Olmalarning rangining ta'siri",
+          "Olmalarning mevasining ta'siri",
+          "Olmalarning qobig'ining ta'siri"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "8",
+        "question": "Olmalarning xarakterli ta'mi uchun qand miqdori qancha bo'lishi kerak?",
+        "options": [
+          "30%",
+          "25%",
+          "15%",
+          "20%"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "9",
+        "question": "Olmalarning xarakterli ta'mi quyidagi ta'sirlarning biridan kelib chiqadi:",
+        "options": [
+          "Olmalarning qobig'ining ta'siri",
+          "Olmalarning mevasining ta'siri",
+          "Olmalarning shaklining ta'siri",
+          "Olmalarning rangining ta'siri"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "10",
+        "question": "Olmalarning xarakterli ta'mi uchun qand miqdori qancha bo'lishi kerak?",
+        "options": [
+          "25%",
+          "30%",
+          "20%",
+          "15%"
+        ],
+        "correct": 2
+      }
+    ],
+    "timestamp": 1778140540111
+  },
+  "1235873450": {
+    "topic": "Fayl: Ona tili majburiy.pdf",
+    "questions": [
+      {
+        "id": "1",
+        "question": "Qaysi javobdagi so‘zlar imloviy jihatdan to‘g‘ri yozilgan?",
+        "options": [
+          "xususiyat, tafsilot",
+          "daromad, sabzovot",
+          "saxovot, zokovat",
+          "halovat, forosat"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "2",
+        "question": "Qaysi javobda qo‘shimcha qo‘shilishi bilan bog‘liq imloviy xatolik mavjud?",
+        "options": [
+          "Boshing ko‘kga yetgan bo‘lsa ham, Ustozlar ilmiga quloq sol har dam.",
+          "Og‘ir yukdan zo‘riqqan qo‘llariga biroz dam berdi.",
+          "Yuziga urilgan salqin shabada uni yana ham tetiklashtirdi.",
+          "Boqqaning ikkita echki, O‘shqirganing yer tebratar."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "3",
+        "question": "Qaysi gapda chiziqcha qo‘llash bilan bog‘liq imloviy xatolik mavjud emas?",
+        "options": [
+          "Sen-la baxtiyorman, aziz Vatanim, Senga fido bo‘lsin shu jon-u tanim.",
+          "Senchi, sen bugun bormaysan-mi?",
+          "Bu ishlarni bugun-oq bitiring.",
+          "Gulzordagi och-sariq, qizil gullar nafis tebranib turibdi."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "4",
+        "question": "Qaysi gapda vergul qo‘llash bilan bog‘liq xatolik mavjud emas?",
+        "options": [
+          "Biz bugun, shubhasiz, g‘alaba qozonamiz.",
+          "Bu fikrga qo‘shilmaydi balki, jon-jahdi bilan qarshi chiqadi.",
+          "Bu safar na Nazira, na Nodira, kelmadi.",
+          "Bizga kitob, daftar, qalamlar, kerak."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "5",
+        "question": "Qaysi javobdagi ajratib ko‘rsatilgan so‘z ko‘chma ma’noda qo‘llangan?",
+        "options": [
+          "buloqning ko‘zi",
+          "tog‘cho‘qqisi",
+          "qalintaxta",
+          "shabadaning yugurishi"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "6",
+        "question": "Qaysi javobda ot turkumi doirasida o‘zaro shakldoshlik hosil qila oladigan so‘z berilgan?",
+        "options": [
+          "ot",
+          "qor",
+          "afzal",
+          "shoh"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "7",
+        "question": "Qaysi javobda zid ma’noli so‘zlar juftligi berilgan?",
+        "options": [
+          "tor − keng",
+          "qalin − yo‘g‘on",
+          "hiyla − xiyla",
+          "xotirjam − bemalol"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "8",
+        "question": "Qaysi javobda tasviriy ifodaning izohi to‘g‘ri berilgan?",
+        "options": [
+          "o‘rmon qiroli − sher",
+          "kumush tola − makkajo‘xori",
+          "dala malikasi − paxta",
+          "mo‘yqalam ustalari − shoir"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "9",
+        "question": "Qaysi javobdagiyomon so‘zigunoh, ayb ma’nolarida qo‘llangan?",
+        "options": [
+          "Hay, Xadichaxon, o‘ylab gapiring-a, birovga tuhmat qilish yomon-a!",
+          "Bolalikda o‘tganyomonkunlari esiga tushib xo‘rligi keldi.",
+          "Yarasi judayomon, juda qiynalib yotibdi.",
+          "Yomonxabarning qanoti yengil bo‘ladi, tez tarqaladi."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "10",
+        "question": "Fe’lning birgalik nisbat shakli qatnashgan gapni toping.",
+        "options": [
+          "Yetishibdi mozorga Ketmon-u bel ushlashib.",
+          "Men unga hazillashgan edim, ishonib o‘tiribdi-ya.",
+          "Chaqimchilik qilish yaxshi odat emas.",
+          "Nasibaxon kirishini ham, qaytib ketishini ham bilmay qoldi."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "11",
+        "question": "Qaysi javobda ot va sifat turkumiga oid juftlik berilgan?",
+        "options": [
+          "sevgi − kuzgi",
+          "muattar − iforli",
+          "chiroy − ko‘rk",
+          "chiziq − qiliq"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "12",
+        "question": "Qaysi gapda undov so‘z mavjud emas?",
+        "options": [
+          "“Albatta, mehnatning rohatini ko‘rish yoqimli”, −dedi bobosi.",
+          "“Oh-oh, buncha mazali ekan bu muqaymoq!” −dedi u.",
+          "“Hey, menga qara, Gulchehra”, −dedi u.",
+          "“Chuh jonivor”, −dedi Qosimjon otiga."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "13",
+        "question": "Otli so‘z birikmasi berilgan javobni aniqang.",
+        "options": [
+          "bajarilgan ish",
+          "akamni ko‘rmoq",
+          "chiroyli kiyingan",
+          "ishni tezlatish"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "14",
+        "question": "Hol qatnashgan gapni toping.",
+        "options": [
+          "Noshud ketganda maqtanar, Botir − qaytganda.",
+          "Men yoz faslini yaxshi ko‘raman.",
+          "Aytar so‘zni ayt, Aytmas so‘zdan qayt.",
+          "Urushning boshi − o‘yin, Oxiri − o‘lim."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "15",
+        "question": "Bog‘langan qo‘shma gap berilgan javobni toping.",
+        "options": [
+          "Ish ishtaha ochar, dangasa esa ishdan qochar.",
+          "Shuni bilingki, Vatan muqaddasdir.",
+          "Tegishmagin ko‘pga, Teng bo‘lasan cho‘pga.",
+          "Bir vaqt qarasam, oyoqlarim o‘z-o‘zidan yurib ketyapti."
+        ],
+        "correct": 0
+      },
+      {
+        "id": "16",
+        "question": "Qaysi javobda paronim so‘zlar juftligi berilgan?",
+        "options": [
+          "afzal − abzal",
+          "shoh − shox",
+          "tor − keng",
+          "qor − qar"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "17",
+        "question": "Qaysi javobda sinonim so‘zlar juftligi berilgan?",
+        "options": [
+          "katta − ulug‘",
+          "qora − oq",
+          "yomon − yoqimli",
+          "qalb − miya"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "18",
+        "question": "Qaysi javobda antonim so‘zlar juftligi berilgan?",
+        "options": [
+          "katta − kichik",
+          "qora − qora",
+          "yomon − yaxshi",
+          "qalb − qalb"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "19",
+        "question": "Qaysi javobda omonim so‘zlar juftligi berilgan?",
+        "options": [
+          "ot − ot",
+          "qor − qor",
+          "shoh − shox",
+          "afzal − abzal"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "20",
+        "question": "Qaysi javobda modal so‘z mavjud emas?",
+        "options": [
+          "Albatta, mehnatning rohatini ko‘rish yoqimli, −dedi bobosi.",
+          "Oh-oh, buncha mazali ekan bu muqaymoq! −dedi u.",
+          "Hey, menga qara, Gulchehra, −dedi u.",
+          "Chuh jonivor, −dedi Qosimjon otiga."
+        ],
+        "correct": 0
+      }
+    ],
+    "timestamp": 1778057927525
+  },
+  "2129117979": {
+    "topic": "Mavzu ko'rsatilmadi",
+    "questions": [
+      {
+        "id": "1",
+        "question": "2x + 5 = 11 tenglama uchun x ni toping?",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "2",
+        "question": "Agar x = 2 va y = 3 bo'lsa, x + y ning qiymati qanday bo'ladi?",
+        "options": [
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "3",
+        "question": "5x - 2 = 18 tenglama uchun x ni toping?",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "4",
+        "question": "Bir kitobning narxi 25 ming so'm. Agar ushbu kitobning 15% chi ga erga tushgan bo'lsa, unda kitobning yangi narxi qancha bo'ladi?",
+        "options": [
+          "21 250",
+          "22 250",
+          "23 250",
+          "24 250"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "5",
+        "question": "4x + 2 = 26 tenglama uchun x ni toping?",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "6",
+        "question": "Agar x = 4 va y = 2 bo'lsa, x - y ning qiymati qanday bo'ladi?",
+        "options": [
+          "1",
+          "2",
+          "3",
+          "6"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "7",
+        "question": "3x - 1 = 14 tenglama uchun x ni toping?",
+        "options": [
+          "4",
+          "5",
+          "6",
+          "7"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "8",
+        "question": "2x + 1 = 9 tenglama uchun x ni toping?",
+        "options": [
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "9",
+        "question": "Agar x = 5 va y = 3 bo'lsa, x  y ning qiymati qanday bo'ladi?",
+        "options": [
+          "10",
+          "12",
+          "15",
+          "18"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "10",
+        "question": "6x - 3 = 33 tenglama uchun x ni toping?",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "correct": 1
+      }
+    ]
+  },
+  "8086735372": {
+    "topic": "Mavzu ko'rsatilmadi",
+    "questions": [
+      {
+        "id": "1",
+        "question": "Futbol o'yini qancha davom etadi?",
+        "options": [
+          "60 daqiqa",
+          "90 daqiqa",
+          "120 daqiqa",
+          "150 daqiqa"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "2",
+        "question": "Futbol o'yinida qancha o'yinchi ishtirok etadi?",
+        "options": [
+          "10 ta",
+          "11 ta",
+          "12 ta",
+          "15 ta"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "3",
+        "question": "Futbolning eng yuqori xalqaro boshqaruv organi kim?",
+        "options": [
+          "FIFA",
+          "UEFA",
+          "AFC",
+          "CONCACAF"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "4",
+        "question": "Futbol bo'yicha Jahon chempionati qancha vaqtning o'zida o'tkaziladi?",
+        "options": [
+          "2 yil",
+          "4 yil",
+          "6 yil",
+          "8 yil"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "5",
+        "question": "Futbol o'yinida eng ko'p gol urgan o'yinchi kim?",
+        "options": [
+          "Lionel Messi",
+          "Cristiano Ronaldo",
+          "Zlatan Ibrahimović",
+          "Robert Lewandowski"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "6",
+        "question": "Futbol o'yinida qancha hakam ishtirok etadi?",
+        "options": [
+          "2 ta",
+          "3 ta",
+          "4 ta",
+          "5 ta"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "7",
+        "question": "Futbolning eng mashhur klub turniri kim?",
+        "options": [
+          "Chempionlar ligasi",
+          "Evropa ligasi",
+          "Libertadores kubogi",
+          "Klublar o'rtasidagi jahon chempionati"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "8",
+        "question": "Futbol o'yinida penalti tepish qoidalari qanday?",
+        "options": [
+          "11 metr masofadan",
+          "12 metr masofadan",
+          "13 metr masofadan",
+          "15 metr masofadan"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "9",
+        "question": "Futbol bo'yicha Yevropa chempionati qancha vaqtning o'zida o'tkaziladi?",
+        "options": [
+          "2 yil",
+          "4 yil",
+          "6 yil",
+          "8 yil"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "10",
+        "question": "Futbol o'yinida sariq kartochka qanday jazoga teng?",
+        "options": [
+          "1 daqiqa",
+          "5 daqiqa",
+          "10 daqiqa",
+          "O'yindan chetlatilish"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "11",
+        "question": "Futbol o'yinida qizil kartochka qanday jazoga teng?",
+        "options": [
+          "1 daqiqa",
+          "5 daqiqa",
+          "10 daqiqa",
+          "O'yindan chetlatilish"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "12",
+        "question": "Futbol bo'yicha Olimpiada o'yinlari qancha vaqtning o'zida o'tkaziladi?",
+        "options": [
+          "2 yil",
+          "4 yil",
+          "6 yil",
+          "8 yil"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "13",
+        "question": "Futbol o'yinida g'olib bo'lgan jamoa qancha ochko oladi?",
+        "options": [
+          "1 ochko",
+          "2 ochko",
+          "3 ochko",
+          "5 ochko"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "14",
+        "question": "Futbol bo'yicha Jahon chempionati g'olibiga beriladigan kubokning nomi kim?",
+        "options": [
+          "Jules Rimet kubogi",
+          "FIFA kubogi",
+          "Jahon chempionati kubogi",
+          "Oltin kubok"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "15",
+        "question": "Futbol o'yinida durang natija qancha ochko beradi?",
+        "options": [
+          "0 ochko",
+          "1 ochko",
+          "2 ochko",
+          "3 ochko"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "16",
+        "question": "Futbol bo'yicha Yevropa chempionati g'olibiga beriladigan kubokning nomi kim?",
+        "options": [
+          "Yevropa chempionati kubogi",
+          "UEFA kubogi",
+          "Oltin kubok",
+          "Henry Delaunay kubogi"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "17",
+        "question": "Futbol o'yinida mag'lub bo'lgan jamoa qancha ochko oladi?",
+        "options": [
+          "0 ochko",
+          "1 ochko",
+          "2 ochko",
+          "3 ochko"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "18",
+        "question": "Futbol bo'yicha Jahon chempionati final o'yini qancha vaqtning o'zida o'tkaziladi?",
+        "options": [
+          "60 daqiqa",
+          "90 daqiqa",
+          "120 daqiqa",
+          "150 daqiqa"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "19",
+        "question": "Futbol o'yinida penalti tepishda qancha o'yinchi ishtirok etadi?",
+        "options": [
+          "1 ta",
+          "2 ta",
+          "3 ta",
+          "5 ta"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "20",
+        "question": "Futbol bo'yicha Olimpiada o'yinlari g'olibiga beriladigan kubokning nomi kim?",
+        "options": [
+          "Olimpiada kubogi",
+          "FIFA kubogi",
+          "Jahon chempionati kubogi",
+          "Oltin kubok"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "21",
+        "question": "Futbol o'yinida qancha muddat ichida gol urish mumkin?",
+        "options": [
+          "90 daqiqa",
+          "120 daqiqa",
+          "150 daqiqa",
+          "Cheksiz"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "22",
+        "question": "Futbol bo'yicha Yevropa chempionati final o'yini qancha vaqtning o'zida o'tkaziladi?",
+        "options": [
+          "60 daqiqa",
+          "90 daqiqa",
+          "120 daqiqa",
+          "150 daqiqa"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "23",
+        "question": "Futbol o'yinida qancha hakam yordamchisi ishtirok etadi?",
+        "options": [
+          "2 ta",
+          "3 ta",
+          "4 ta",
+          "5 ta"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "24",
+        "question": "Futbol bo'yicha Jahon chempionati g'olibiga beriladigan mukofotning nomi kim?",
+        "options": [
+          "Oltin to'p",
+          "Kumush to'p",
+          "Bronza to'p",
+          "FIFA mukofoti"
+        ],
+        "correct": 0
+      },
+      {
+        "id": "25",
+        "question": "Futbol o'yinida qancha muddat ichida o'yin to'xtatilishi mumkin?",
+        "options": [
+          "1 daqiqa",
+          "5 daqiqa",
+          "10 daqiqa",
+          "Cheksiz"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "26",
+        "question": "Futbol bo'yicha Yevropa chempionati g'olibiga beriladigan mukofotning nomi kim?",
+        "options": [
+          "Oltin to'p",
+          "Kumush to'p",
+          "Bronza to'p",
+          "UEFA mukofoti"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "27",
+        "question": "Futbol o'yinida qancha o'yinchi maydondan chetlatilishi mumkin?",
+        "options": [
+          "1 ta",
+          "2 ta",
+          "3 ta",
+          "5 ta"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "28",
+        "question": "Futbol bo'yicha Olimpiada o'yinlari g'olibiga beriladigan mukofotning nomi kim?",
+        "options": [
+          "Oltin to'p",
+          "Kumush to'p",
+          "Bronza to'p",
+          "Olimpiada mukofoti"
+        ],
+        "correct": 3
+      },
+      {
+        "id": "29",
+        "question": "Futbol o'yinida qancha muddat ichida o'yin davom etishi mumkin?",
+        "options": [
+          "60 daqiqa",
+          "90 daqiqa",
+          "120 daqiqa",
+          "Cheksiz"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "30",
+        "question": "Futbol bo'yicha Jahon chempionati g'olibiga beriladigan kubokning vazni qancha kilogramm?",
+        "options": [
+          "5 kg",
+          "6 kg",
+          "7 kg",
+          "10 kg"
+        ],
+        "correct": 2
+      }
+    ]
+  }
+}

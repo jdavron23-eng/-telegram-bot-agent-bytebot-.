@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Interaktiv Test</title>
+    <!-- Telegram Web App API -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Start Screen -->
+        <div id="start-screen" class="screen active fade-in">
+            <div class="hero-icon">🧠</div>
+            <h1>Bilimlar Bellashuvi!</h1>
+            <h2 id="quiz-topic" style="color: var(--accent-color); margin-bottom: 10px;"></h2>
+            <p>O'z bilimingizni sinab ko'rishga tayyormisiz? 10 ta qiziqarli savol sizni kutmoqda.</p>
+            <button id="start-btn" class="primary-btn pulse">Testni Boshlash</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="screen">
+            <div class="header">
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+                <div class="stats">
+                    <span id="question-indicator" class="badge">1/10</span>
+                    <span id="score-indicator" class="badge score-badge">🌟 0</span>
+                </div>
+            </div>
+            
+            <div class="question-container slide-in">
+                <h2 id="question-text">Savol bu yerda bo'ladi?</h2>
+            </div>
+
+            <div id="options-container" class="options-container">
+                <!-- Options will be generated here -->
+            </div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result-screen" class="screen fade-in">
+            <div class="hero-icon" id="result-icon">🏆</div>
+            <h1 id="result-title">Ajoyib!</h1>
+            
+            <div class="score-board">
+                <div class="score-circle">
+                    <span id="final-score">0</span>
+                    <span class="total-score">/ 10</span>
+                </div>
+            </div>
+            
+            <p id="result-message">Siz testni muvaffaqiyatli yakunladingiz!</p>
+            <div class="button-group">
+                <button id="retry-btn" class="secondary-btn">🔄 Qayta ishlash</button>
+                <button id="close-btn" class="primary-btn">🏠 Yopish</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,2 +1,7 @@
 node_modules/
 .env
+cloudflared.exe
+pinggy_url.txt
+scratch/
+*.log
+logs/

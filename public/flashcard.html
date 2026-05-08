@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flashcardlar</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: var(--tg-theme-bg-color, #1a1a2e);
+            --text: var(--tg-theme-text-color, #e0e0e0);
+            --hint: var(--tg-theme-hint-color, #999);
+            --accent: var(--tg-theme-button-color, #6c5ce7);
+            --card-front: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            --card-back: linear-gradient(135deg, #00b894 0%, #55efc4 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        #app { padding: 16px; max-width: 500px; margin: 0 auto; }
+        .screen { display: none; }
+        .screen.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Header */
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; padding: 12px 16px;
+            background: rgba(255,255,255,0.05); border-radius: 16px;
+        }
+        .counter { font-size: 14px; font-weight: 600; color: var(--hint); }
+        .counter span { color: var(--accent); font-size: 18px; }
+        .progress-dots { display: flex; gap: 4px; flex-wrap: wrap; max-width: 60%; }
+        .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: rgba(255,255,255,0.15); transition: all 0.3s;
+        }
+        .dot.active { background: var(--accent); transform: scale(1.2); }
+        .dot.seen { background: rgba(108, 92, 231, 0.5); }
+
+        /* Card Container */
+        .card-container {
+            perspective: 1000px;
+            width: 100%; height: 340px;
+            margin-bottom: 24px; cursor: pointer;
+        }
+        .card {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card.flipped { transform: rotateY(180deg); }
+        .card-face {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden;
+            border-radius: 24px; padding: 28px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .card-front {
+            background: var(--card-front);
+            color: #fff;
+        }
+        .card-back {
+            background: var(--card-back);
+            color: #fff;
+            transform: rotateY(180deg);
+        }
+        .card-label {
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; opacity: 0.7; margin-bottom: 16px;
+        }
+        .card-text {
+            font-size: 18px; font-weight: 600; line-height: 1.5;
+            max-height: 200px; overflow-y: auto;
+        }
+        .card-hint {
+            margin-top: 16px; font-size: 13px; opacity: 0.8;
+            background: rgba(255,255,255,0.15); padding: 10px 16px;
+            border-radius: 12px; width: 100%;
+        }
+        .tap-hint {
+            font-size: 12px; color: var(--hint); text-align: center;
+            margin-bottom: 16px; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex; gap: 12px; justify-content: center;
+        }
+        .nav-btn {
+            flex: 1; padding: 14px; border: none; border-radius: 16px;
+            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .nav-btn:active { transform: scale(0.95); }
+        .prev-btn { background: rgba(255,255,255,0.1); color: var(--text); }
+        .next-btn { background: var(--accent); color: #fff; }
+        .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+        /* Start Screen */
+        .start-screen { text-align: center; padding-top: 60px; }
+        .start-icon { font-size: 72px; margin-bottom: 24px; }
+        .start-screen h1 { font-size: 28px; margin-bottom: 12px; }
+        .start-screen p { color: var(--hint); margin-bottom: 32px; line-height: 1.5; }
+        .start-btn {
+            background: var(--accent); color: #fff; border: none;
+            padding: 16px 48px; border-radius: 16px; font-size: 17px;
+            font-weight: 700; font-family: 'Inter', sans-serif;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .start-btn:active { transform: scale(0.95); }
+
+        /* Finish Screen */
+        .finish-screen { text-align: center; padding-top: 60px; }
+        .finish-icon { font-size: 72px; margin-bottom: 24px; }
+        .finish-screen h1 { font-size: 28px; margin-bottom: 12px; }
+        .finish-screen p { color: var(--hint); margin-bottom: 32px; }
+        .finish-btns { display: flex; gap: 12px; flex-direction: column; }
+        .finish-btn {
+            padding: 14px; border: none; border-radius: 16px;
+            font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .restart-btn { background: rgba(255,255,255,0.1); color: var(--text); }
+        .close-btn { background: var(--accent); color: #fff; }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- Start -->
+    <div id="start" class="screen active start-screen">
+        <div class="start-icon">🧠</div>
+        <h1>Flashcardlar</h1>
+        <p id="start-info">Yuklanmoqda...</p>
+        <button class="start-btn" id="start-btn" disabled>Boshlash</button>
+    </div>
+    <!-- Cards -->
+    <div id="cards" class="screen">
+        <div class="header">
+            <div class="counter"><span id="current-num">1</span> / <span id="total-num">0</span></div>
+            <div class="progress-dots" id="dots"></div>
+        </div>
+        <div class="tap-hint">👆 Kartochkani bosib javobni ko'ring</div>
+        <div class="card-container" id="card-container">
+            <div class="card" id="card">
+                <div class="card-face card-front">
+                    <div class="card-label">❓ Savol</div>
+                    <div class="card-text" id="q-text"></div>
+                </div>
+                <div class="card-face card-back">
+                    <div class="card-label">✅ Javob</div>
+                    <div class="card-text" id="a-text"></div>
+                    <div class="card-hint" id="hint-text"></div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-btn prev-btn" id="prev-btn" disabled>⬅️ Oldingi</button>
+            <button class="nav-btn next-btn" id="next-btn">Keyingi ➡️</button>
+        </div>
+    </div>
+    <!-- Finish -->
+    <div id="finish" class="screen finish-screen">
+        <div class="finish-icon">🎉</div>
+        <h1>Tabriklaymiz!</h1>
+        <p>Siz barcha kartochkalarni ko'rib chiqdingiz!</p>
+        <div class="finish-btns">
+            <button class="finish-btn restart-btn" id="restart-btn">🔄 Qayta ko'rish</button>
+            <button class="finish-btn close-btn" id="close-btn">🏠 Yopish</button>
+        </div>
+    </div>
+</div>
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand(); tg.ready(); tg.MainButton.hide();
+const userId = new URLSearchParams(window.location.search).get('userId');
+let cards = [], idx = 0;
+
+async function load() {
+    if (!userId) return;
+    try {
+        const r = await fetch(`/api/flashcards/${userId}`);
+        if (!r.ok) return;
+        cards = await r.json();
+        if (cards.length > 0) {
+            document.getElementById('start-info').textContent =
+                `${cards.length} ta kartochka tayyor. Kartochkani bosib javobni ko'ring!`;
+            document.getElementById('start-btn').disabled = false;
+            document.getElementById('start-btn').textContent = "Boshlash 🚀";
+        } else {
+            document.getElementById('start-info').textContent = "Kartochkalar topilmadi.";
+        }
+    } catch(e) { document.getElementById('start-info').textContent = "Xatolik yuz berdi."; }
+}
+load();
+
+document.getElementById('start-btn').addEventListener('click', () => {
+    idx = 0;
+    show('start', 'cards');
+    renderDots();
+    renderCard();
+});
+
+document.getElementById('card-container').addEventListener('click', () => {
+    document.getElementById('card').classList.toggle('flipped');
+    if(tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+});
+
+document.getElementById('prev-btn').addEventListener('click', () => { if(idx > 0) { idx--; flip(false); renderCard(); }});
+document.getElementById('next-btn').addEventListener('click', () => {
+    if(idx < cards.length - 1) { idx++; flip(false); renderCard(); }
+    else { show('cards', 'finish'); }
+});
+document.getElementById('restart-btn').addEventListener('click', () => { idx = 0; show('finish', 'cards'); flip(false); renderCard(); });
+document.getElementById('close-btn').addEventListener('click', () => tg.close());
+
+function flip(state) {
+    const c = document.getElementById('card');
+    if(state) c.classList.add('flipped'); else c.classList.remove('flipped');
+}
+function show(hideId, showId) {
+    document.getElementById(hideId).classList.remove('active');
+    document.getElementById(showId).classList.add('active');
+}
+function renderDots() {
+    const d = document.getElementById('dots');
+    d.innerHTML = '';
+    document.getElementById('total-num').textContent = cards.length;
+    for(let i = 0; i < cards.length; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot'; d.appendChild(dot);
+    }
+}
+function renderCard() {
+    const c = cards[idx];
+    document.getElementById('q-text').textContent = c.question;
+    document.getElementById('a-text').textContent = c.answer;
+    const hint = document.getElementById('hint-text');
+    hint.textContent = c.hint || '';
+    hint.style.display = c.hint ? 'block' : 'none';
+    document.getElementById('current-num').textContent = idx + 1;
+    document.getElementById('prev-btn').disabled = idx === 0;
+    document.getElementById('next-btn').textContent = idx === cards.length - 1 ? "Yakunlash ✅" : "Keyingi ➡️";
+    // Update dots
+    document.querySelectorAll('.dot').forEach((d,i) => {
+        d.className = 'dot';
+        if(i === idx) d.classList.add('active');
+        else if(i < idx) d.classList.add('seen');
+    });
+    // Animate card
+    const container = document.getElementById('card-container');
+    container.style.animation = 'none'; container.offsetHeight;
+    container.style.animation = 'fadeIn 0.3s ease';
+}
+</script>
+</body>
+</html>
